@@ -35,11 +35,11 @@ call_duration_df = pd.DataFrame(call_duration_data)
 # Define the function to generate AI insights
 def explain_with_ai(data, title):
     client = OpenAI(api_key=OPENAI_API_KEY)
-    prompt = f"Analyze the following data for the chart titled '{title}':\n{data}\nProvide a summary, insights, and recommended actions."
+    prompt = f"Analyze the following data for the chart titled '{title}':\n{data}\nProvide a summary, insights, prediction and recommended actions."
     try:
         response = client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "You are a helpful AI assistant analyzing data for insights and recommendations for an e-hailing company named TADA."},
+                {"role": "system", "content": "You are a helpful AI assistant analyzing data for insights, predictions and recommendations for an e-hailing company named TADA."},
                 {"role": "user", "content": prompt}
             ],
             model="gpt-4",
