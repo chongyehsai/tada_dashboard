@@ -53,45 +53,156 @@ def explain_with_ai(data, title):
 st.sidebar.title("Customer Insights Dashboard")
 tab = st.sidebar.radio("Select Tab", ["Main", "Sentiment Score", "Churn Prediction", "Follow-Up Analysis", "Call Metrics", "Issue Types Breakdown", "Call Duration by Issue"])
 
+# Custom color palettes
+custom_colors = px.colors.qualitative.Set3
+
 # Display corresponding figures based on selected tab
 if tab == "Main":
     st.subheader("Main Dashboard Overview")
     
     col1, col2 = st.columns(2)
     with col1:
-        st.plotly_chart(px.line(df, x='Call Date', y='Sentiment Score', title='Average Sentiment Score by Call Date'), use_container_width=True)
+        st.plotly_chart(
+            px.line(
+                df,
+                x='Call Date',
+                y='Sentiment Score',
+                title='Average Sentiment Score by Call Date',
+                color_discrete_sequence=custom_colors
+            ),
+            use_container_width=True
+        )
     with col2:
-        st.plotly_chart(px.bar(df, x='Customer ID', y='Churn Likelihood', title='Churn Prediction by Customer ID'), use_container_width=True)
+        st.plotly_chart(
+            px.bar(
+                df,
+                x='Customer ID',
+                y='Churn Likelihood',
+                title='Churn Prediction by Customer ID',
+                color='Customer ID',
+                color_discrete_sequence=custom_colors
+            ),
+            use_container_width=True
+        )
     
     col1, col2 = st.columns(2)
     with col1:
-        st.plotly_chart(px.pie(df, names='Follow-Up Required', title='Follow-Up Analysis by Issue Types', hole=0.4), use_container_width=True)
+        st.plotly_chart(
+            px.pie(
+                df,
+                names='Follow-Up Required',
+                title='Follow-Up Analysis by Issue Types',
+                color_discrete_sequence=custom_colors,
+                hole=0.4
+            ),
+            use_container_width=True
+        )
     with col2:
-        st.plotly_chart(px.bar(df, x='Call Date', y=['Call Duration Minutes', 'Customer Wait Time Minutes'], title='Call Metrics', barmode='group'), use_container_width=True)
+        st.plotly_chart(
+            px.bar(
+                df,
+                x='Call Date',
+                y=['Call Duration Minutes', 'Customer Wait Time Minutes'],
+                title='Call Metrics',
+                barmode='group',
+                color_discrete_sequence=custom_colors
+            ),
+            use_container_width=True
+        )
     
     col1, col2 = st.columns(2)
     with col1:
-        st.plotly_chart(px.pie(issue_df, values='Count', names='Issue Type', title='Customer Service Issue Types Breakdown (TADA)'), use_container_width=True)
+        st.plotly_chart(
+            px.pie(
+                issue_df,
+                values='Count',
+                names='Issue Type',
+                title='Customer Service Issue Types Breakdown (TADA)',
+                color_discrete_sequence=custom_colors
+            ),
+            use_container_width=True
+        )
     with col2:
-        st.plotly_chart(px.bar(call_duration_df, x='Issue Type', y='Average Call Duration', title='Average Call Duration by Issue Type'), use_container_width=True)
+        st.plotly_chart(
+            px.bar(
+                call_duration_df,
+                x='Issue Type',
+                y='Average Call Duration',
+                title='Average Call Duration by Issue Type',
+                color='Issue Type',
+                color_discrete_sequence=custom_colors
+            ),
+            use_container_width=True
+        )
 
 elif tab == "Sentiment Score":
-    st.plotly_chart(px.line(df, x='Call Date', y='Sentiment Score', title='Average Sentiment Score by Call Date'))
+    st.plotly_chart(
+        px.line(
+            df,
+            x='Call Date',
+            y='Sentiment Score',
+            title='Average Sentiment Score by Call Date',
+            color_discrete_sequence=custom_colors
+        )
+    )
 
 elif tab == "Churn Prediction":
-    st.plotly_chart(px.bar(df, x='Customer ID', y='Churn Likelihood', title='Churn Prediction by Customer ID'))
+    st.plotly_chart(
+        px.bar(
+            df,
+            x='Customer ID',
+            y='Churn Likelihood',
+            title='Churn Prediction by Customer ID',
+            color='Customer ID',
+            color_discrete_sequence=custom_colors
+        )
+    )
 
 elif tab == "Follow-Up Analysis":
-    st.plotly_chart(px.pie(df, names='Follow-Up Required', title='Follow-Up Analysis by Issue Types', hole=0.4))
+    st.plotly_chart(
+        px.pie(
+            df,
+            names='Follow-Up Required',
+            title='Follow-Up Analysis by Issue Types',
+            color_discrete_sequence=custom_colors,
+            hole=0.4
+        )
+    )
 
 elif tab == "Call Metrics":
-    st.plotly_chart(px.bar(df, x='Call Date', y=['Call Duration Minutes', 'Customer Wait Time Minutes'], title='Call Metrics', barmode='group'))
+    st.plotly_chart(
+        px.bar(
+            df,
+            x='Call Date',
+            y=['Call Duration Minutes', 'Customer Wait Time Minutes'],
+            title='Call Metrics',
+            barmode='group',
+            color_discrete_sequence=custom_colors
+        )
+    )
 
 elif tab == "Issue Types Breakdown":
-    st.plotly_chart(px.pie(issue_df, values='Count', names='Issue Type', title='Customer Service Issue Types Breakdown (TADA)'))
+    st.plotly_chart(
+        px.pie(
+            issue_df,
+            values='Count',
+            names='Issue Type',
+            title='Customer Service Issue Types Breakdown (TADA)',
+            color_discrete_sequence=custom_colors
+        )
+    )
 
 elif tab == "Call Duration by Issue":
-    st.plotly_chart(px.bar(call_duration_df, x='Issue Type', y='Average Call Duration', title='Average Call Duration by Issue Type'))
+    st.plotly_chart(
+        px.bar(
+            call_duration_df,
+            x='Issue Type',
+            y='Average Call Duration',
+            title='Average Call Duration by Issue Type',
+            color='Issue Type',
+            color_discrete_sequence=custom_colors
+        )
+    )
 
 # AI Insights Button
 if st.button("Ask AI"):
